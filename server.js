@@ -56,7 +56,7 @@ io.sockets.on('connection', (socket) => {
                         if (numClients === 0){ //如果房间里没人
                         socket.join(room);
                         io.sockets.in(room).emit('created', room);
-                        } else if (numClients <= 2) { //如果房间里有一个人
+                        } else if (numClients < 2) { //如果房间里有一个人
                         socket.join(room);
                         io.sockets.in(room).emit('join', room);
                         // socket.emit('joined', room); //发送 “joined”消息
