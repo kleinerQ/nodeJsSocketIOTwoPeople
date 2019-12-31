@@ -55,7 +55,7 @@ io.sockets.on('connection', (socket) => {
                         
                         if (numClients === 0){ //如果房间里没人
                         socket.join(room);
-                        socket.emit('created', room); 
+                        io.sockets.in(room).broadcast.emit('created', room); 
                         } else if (numClients < 2) { //如果房间里有一个人
                         socket.join(room);
                         io.sockets.in(room).broadcast.emit('someone joined', room); // 給其他人
