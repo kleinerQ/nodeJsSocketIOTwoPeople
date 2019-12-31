@@ -74,7 +74,7 @@ io.sockets.on('connection', (socket) => {
                         
                         });
               socket.on('sdp', (room , spdInfo) => { //收到 “spd” 消息
-                        io.sockets.in(room).broadcast.emit('sdp', spdInfo);
+                        socket.broadcast.in(room).emit('sdp', spdInfo);
                         
                         });
                         
