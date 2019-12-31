@@ -58,8 +58,8 @@ io.sockets.on('connection', (socket) => {
                         socket.emit('created', room); // 給自已
                         } else if (numClients < 2) { //如果房间里有一个人
                         socket.join(room);
-//                         socket.broadcast.in(room).emit('someone joined', room); // 給room其他人
-//                         socket.emit('join', room); //給自己 
+                        socket.broadcast.in(room).emit('someone joined', room); // 給room其他人
+                        socket.emit('join', room); //給自己 
                         } else { // max two clients
                         socket.emit('full', room); //給自己
                         }
