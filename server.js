@@ -55,13 +55,13 @@ io.sockets.on('connection', (socket) => {
                         
                         if (numClients === 0){ //如果房间里没人
                         socket.join(room);
-                        io.sockets.in(room).emit('created', room); 
+                        socket.emit('created', room); // 給自已
                         } else if (numClients < 2) { //如果房间里有一个人
                         socket.join(room);
-                        io.sockets.in(room).broadcast.emit('someone joined', room); // 給其他人
+                        socket.broadcast.in(room).emit('someone joined', room); // 給room其他人
                         socket.emit('join', room); //給自己
                         } else { // max two clients
-                        socket.emit('full', room); //发送 "full" 消息
+                        socket.emit('full', room); //給自己
                         }
 //                         socket.emit('emit(): client//  ' + socket.id +
 //                                     ' joined room ' + room);
