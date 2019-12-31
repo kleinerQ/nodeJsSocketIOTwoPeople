@@ -55,18 +55,18 @@ io.sockets.on('connection', (socket) => {
                         
                         if (numClients === 0){ //如果房间里没人
                         socket.join(room);
-                        socket.emit('created', room); //发送 "created" 消息
-                        } else if (numClients < 5) { //如果房间里有一个人
-                        io.sockets.in(room).emit('join', room);
+                        io.sockets.in(room).emit('created', room);
+                        } else if (numClients <= 2) { //如果房间里有一个人
                         socket.join(room);
-                        socket.emit('joined', room); //发送 “joined”消息
+                        io.sockets.in(room).emit('join', room);
+                        // socket.emit('joined', room); //发送 “joined”消息
                         } else { // max two clients
                         socket.emit('full', room); //发送 "full" 消息
                         }
-                        socket.emit('emit(): client ' + socket.id +
-                                    ' joined room ' + room);
-                        socket.broadcast.emit('broadcast(): client ' + socket.id +
-                                              ' joined room ' + room);
+//                         socket.emit('emit(): client//  ' + socket.id +
+//                                     ' joined room ' + room);
+//                         socket.broadcast.emit('broadcast(): client ' + socket.id +
+//                                               ' joined room ' + room);
                         
                         });
               socket.on('cancelCalling', (room) => { //收到 “cancelCalling” 消息
