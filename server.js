@@ -55,11 +55,11 @@ io.sockets.on('connection', (socket) => {
                         
                         if (numClients === 0){ //如果房间里没人
                         socket.join(room);
-                        io.sockets.in(room).emit('created', room);
+                        socket.emit('created', room); 
                         } else if (numClients < 2) { //如果房间里有一个人
                         socket.join(room);
-                        io.sockets.in(room).emit('join', room);
-                        // socket.emit('joined', room); //发送 “joined”消息
+                        io.sockets.in(room).broadcast.emit('someone joined', room); // 給其他人
+                        socket.emit('join', room); //給自己
                         } else { // max two clients
                         socket.emit('full', room); //发送 "full" 消息
                         }
@@ -74,7 +74,7 @@ io.sockets.on('connection', (socket) => {
                         
                         });
               socket.on('sdp', (room , spdInfo) => { //收到 “spd” 消息
-                        io.sockets.in(room).emit('sdp', spdInfo);
+                        io.sockets.in(room).broadcast.emit('sdp', spdInfo);
                         
                         });
                         
