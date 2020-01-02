@@ -1,6 +1,6 @@
 var isInitiator;
 
-room = prompt('Enter room name:'); //弹出一个输入窗口
+room = prompt('Enter room namee:'); //弹出一个输入窗口
 
 const socket = io.connect(); //与服务端建立socket连接
 
