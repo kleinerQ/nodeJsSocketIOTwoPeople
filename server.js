@@ -81,6 +81,12 @@ io.sockets.on('connection', (socket) => {
               socket.on('candidate', (room , candidateInfo) => { //收到 “candidate” 消息
                         io.sockets.in(room).emit('candidate', candidateInfo);
                         
-                        });          
+                        });
+              socket.on('personCount', (room) => { //收到 “personCount” 消息
+              			var clientsInRoom = io.sockets.adapter.rooms[room];
+                        var numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0; //房间里的人数
+                        socket.emit('personCount', numClients); //給自己 
+                        
+                        });                   
               
 });
