@@ -52,16 +52,19 @@ io.sockets.on('connection', (socket) => {
                         
                         log('Room ' + room + ' has ' + numClients + ' client(s)');
                         log('Request to create or join room ' + room);
+                        var msg = { room:room };
+                        let s = JSON.stringify(msg);
+                        var buf = Buffer.from(s, 'utf-8');
                         
                         if (numClients === 0){ //如果房间里没人
                         socket.join(room);
-                        socket.emit('created', room); // 給自已
+                        socket.emit('created', buf); // 給自已
                         } else if (numClients < 2) { //如果房间里有一个人
                         socket.join(room);
-                        socket.broadcast.in(room).emit('someone joined', room); // 給room其他人
-                        socket.emit('join', room); //給自己 
+                        socket.broadcast.in(room).emit('someone joined', buf); // 給room其他人
+                        socket.emit('join', buf); //給自己 
                         } else { // max two clients
-                        socket.emit('full', room); //給自己
+                        socket.emit('full', buf); //給自己
                         }
 //                         socket.emit('emit(): client//  ' + socket.id +
 //                                     ' joined room ' + room);
@@ -70,7 +73,10 @@ io.sockets.on('connection', (socket) => {
                         
                         });
               socket.on('cancelCalling', (room) => { //收到 “cancelCalling” 消息
-                        io.sockets.in(room).emit('cancelCalling',room);
+              			var msg = { room:room };
+                        let s = JSON.stringify(msg);
+                        var buf = Buffer.from(s, 'utf-8');
+                        io.sockets.in(room).emit('cancelCalling',buf);
                         
                         });
               socket.on('sdp', (room , spdInfo) => { //收到 “spd” 消息
