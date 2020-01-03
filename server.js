@@ -85,7 +85,8 @@ io.sockets.on('connection', (socket) => {
               socket.on('personCount', (room) => { //收到 “personCount” 消息
               			var clientsInRoom = io.sockets.adapter.rooms[room];
                         var numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0; //房间里的人数
-                        socket.emit('personCount', { numClients:numClients}); //給自己 
+                        var buf = Buffer.from(JSON.stringify( {numClients:numClients} ));
+                        socket.emit('personCount',buf ); //給自己 
                         
                         });                   
               
