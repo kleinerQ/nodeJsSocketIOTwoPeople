@@ -21,6 +21,9 @@ io.sockets.on('connection', (socket) => {
               socket.emit('log', array);
               }
               
+              var roomName = "";
+              
+              
               socket.on('message', (message) => { //收到message时，进行广播
                         log('Got message:', message);
                         if (message === 'got user media') {
@@ -46,7 +49,7 @@ io.sockets.on('connection', (socket) => {
                         });
               
               socket.on('create or join', (room) => { //收到 “create or join” 消息
-                        
+                        roomName = room;
                         var clientsInRoom = io.sockets.adapter.rooms[room];
                         var numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0; //房间里的人数
                         
@@ -88,8 +91,8 @@ io.sockets.on('connection', (socket) => {
                         io.sockets.in(room).emit('candidate', candidateInfo); // 給room其他人
                         
                         });
-              socket.on('personCount', (room) => { //收到 “personCount” 消息
-              			var clientsInRoom = io.sockets.adapter.rooms[room];
+              socket.on('personCount', () => { //收到 “personCount” 消息
+              			var clientsInRoom = io.sockets.adapter.rooms[roomName];
                         var numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0; //房间里的人数
                         var msg = { connectionNumber:numClients };
                         let s = JSON.stringify(msg);
