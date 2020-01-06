@@ -97,10 +97,13 @@ io.sockets.on('connection', (socket) => {
                         socket.emit('personCount',buf); //給自己 
                         
                         });
+              socket.on('forceDisconnect', (room) => { //收到 “cancelCalling” 消息
+              			var msg = { room:room };
+                        let s = JSON.stringify(msg);
+                        var buf = Buffer.from(s, 'utf-8');
+                        io.sockets.in(room).emit('forceDisconnect',buf);
                         
-              socket.on('disconnect', function(){
-              
-              			socket.emit('personCount'); //給自己 
-  						});                             
+                        });          
+                            
               
 });
