@@ -80,12 +80,12 @@ io.sockets.on('connection', (socket) => {
                         
                         });
               socket.on('sdp', (room , spdInfo) => { //收到 “spd” 消息
-                        socket.broadcast.in(room).emit('sdp', spdInfo);
+                        socket.broadcast.in(room).emit('sdp', spdInfo); // 給room其他人
                         
                         });
                         
               socket.on('candidate', (room , candidateInfo) => { //收到 “candidate” 消息
-                        io.sockets.in(room).emit('candidate', candidateInfo);
+                        io.sockets.in(room).emit('candidate', candidateInfo); // 給room其他人
                         
                         });
               socket.on('personCount', (room) => { //收到 “personCount” 消息
@@ -96,6 +96,11 @@ io.sockets.on('connection', (socket) => {
                         var buf = Buffer.from(s, 'utf-8');
                         socket.emit('personCount',buf); //給自己 
                         
-                        });                   
+                        });
+                        
+              socket.on('disconnect', function(){
+              
+              			socket.emit('personCount'); //給自己 
+  						});                             
               
 });
