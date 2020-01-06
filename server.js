@@ -101,10 +101,14 @@ io.sockets.on('connection', (socket) => {
                         
                         });
               socket.on('disconnect', (candidateInfo) => { //收到 “disconnect” 消息
-                        var msg = { room:roomName };
-                        let s = JSON.stringify(msg);
-                        var buf = Buffer.from(s, 'utf-8');
-                        io.sockets.in(roomName).emit('cancelCalling',buf);
+              			var clientsInRoom = io.sockets.adapter.rooms[roomName];
+                        var numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0; //房间里的人数
+                        if (numClients != 2){
+                        	var msg = { room:roomName };
+                        	let s = JSON.stringify(msg);
+                        	var buf = Buffer.from(s, 'utf-8');
+                        	io.sockets.in(roomName).emit('cancelCalling',buf);
+                        }
                         
                         });        
                             
