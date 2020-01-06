@@ -79,15 +79,15 @@ io.sockets.on('connection', (socket) => {
               			var msg = { room:roomName };
                         let s = JSON.stringify(msg);
                         var buf = Buffer.from(s, 'utf-8');
-                        io.sockets.in(room).emit('cancelCalling',buf);
+                        io.sockets.in(roomName).emit('cancelCalling',buf);
                         
                         });
-              socket.on('sdp', (room , spdInfo) => { //收到 “spd” 消息
+              socket.on('sdp', (spdInfo) => { //收到 “spd” 消息
                         socket.broadcast.in(room).emit('sdp', spdInfo); // 給room其他人
                         
                         });
                         
-              socket.on('candidate', (room , candidateInfo) => { //收到 “candidate” 消息
+              socket.on('candidate', (candidateInfo) => { //收到 “candidate” 消息
                         io.sockets.in(room).emit('candidate', candidateInfo); // 給room其他人
                         
                         });
@@ -99,14 +99,7 @@ io.sockets.on('connection', (socket) => {
                         var buf = Buffer.from(s, 'utf-8');
                         socket.emit('personCount',buf); //給自己 
                         
-                        });
-              socket.on('forceDisconnect', (room) => { //收到 “cancelCalling” 消息
-              			var msg = { room:room };
-                        let s = JSON.stringify(msg);
-                        var buf = Buffer.from(s, 'utf-8');
-                        io.sockets.in(room).emit('forceDisconnect',buf);
-                        
-                        });          
+                        });        
                             
               
 });
