@@ -75,8 +75,8 @@ io.sockets.on('connection', (socket) => {
 //                                               ' joined room ' + room);
                         
                         });
-              socket.on('cancelCalling', (room) => { //收到 “cancelCalling” 消息
-              			var msg = { room:room };
+              socket.on('cancelCalling', () => { //收到 “cancelCalling” 消息
+              			var msg = { room:roomName };
                         let s = JSON.stringify(msg);
                         var buf = Buffer.from(s, 'utf-8');
                         io.sockets.in(room).emit('cancelCalling',buf);
