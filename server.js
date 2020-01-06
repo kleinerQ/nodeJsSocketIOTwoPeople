@@ -83,12 +83,12 @@ io.sockets.on('connection', (socket) => {
                         
                         });
               socket.on('sdp', (spdInfo) => { //收到 “spd” 消息
-                        socket.broadcast.in(room).emit('sdp', spdInfo); // 給room其他人
+                        socket.broadcast.in(roomName).emit('sdp', spdInfo); // 給room其他人
                         
                         });
                         
               socket.on('candidate', (candidateInfo) => { //收到 “candidate” 消息
-                        io.sockets.in(room).emit('candidate', candidateInfo); // 給room其他人
+                        io.sockets.in(roomName).emit('candidate', candidateInfo); // 給room其他人
                         
                         });
               socket.on('personCount', () => { //收到 “personCount” 消息
