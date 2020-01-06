@@ -88,7 +88,7 @@ io.sockets.on('connection', (socket) => {
                         });
                         
               socket.on('candidate', (candidateInfo) => { //收到 “candidate” 消息
-                        io.sockets.in(roomName).emit('candidate', candidateInfo); // 給room其他人
+                        io.sockets.in(roomName).emit('candidate', candidateInfo); // 給room 所有人
                         
                         });
               socket.on('personCount', () => { //收到 “personCount” 消息
@@ -98,6 +98,13 @@ io.sockets.on('connection', (socket) => {
                         let s = JSON.stringify(msg);
                         var buf = Buffer.from(s, 'utf-8');
                         socket.emit('personCount',buf); //給自己 
+                        
+                        });
+              socket.on('disconnect', (candidateInfo) => { //收到 “disconnect” 消息
+                        var msg = { room:roomName };
+                        let s = JSON.stringify(msg);
+                        var buf = Buffer.from(s, 'utf-8');
+                        io.sockets.in(roomName).emit('cancelCalling',buf);
                         
                         });        
                             
