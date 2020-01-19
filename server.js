@@ -82,6 +82,14 @@ io.sockets.on('connection', (socket) => {
                         io.sockets.in(roomName).emit('cancelCalling',buf);
                         
                         });
+              socket.on('block', () => { //收到 “block” 消息
+              			var msg = { room:roomName };
+                        let s = JSON.stringify(msg);
+                        var buf = Buffer.from(s, 'utf-8');
+                        socket.broadcast.in(room).emit('block', buf); // 給room其他人
+                        socket.emit('cancelCalling', buf); // 給自已
+                        });          
+                        
               socket.on('sdp', (spdInfo) => { //收到 “spd” 消息
                         socket.broadcast.in(roomName).emit('sdp', spdInfo); // 給room其他人
                         
