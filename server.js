@@ -86,7 +86,7 @@ io.sockets.on('connection', (socket) => {
               			var msg = { room:roomName };
                         let s = JSON.stringify(msg);
                         var buf = Buffer.from(s, 'utf-8');
-                        socket.emit('personCount',buf); //給自己 
+                        socket.emit('blockUser',buf); //給自己 
 
                         });          
                         
