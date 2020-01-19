@@ -82,7 +82,7 @@ io.sockets.on('connection', (socket) => {
                         io.sockets.in(roomName).emit('cancelCalling',buf);
                         
                         });
-              socket.on('block', () => { //收到 “block” 消息
+              socket.on('blockUser', () => { //收到 “block” 消息
               			var msg = { room:roomName };
                         let s = JSON.stringify(msg);
                         var buf = Buffer.from(s, 'utf-8');
